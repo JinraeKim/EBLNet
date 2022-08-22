@@ -74,6 +74,10 @@ After running this script, you can get the iou of things and stuff are 92.73 and
 
 During evaluation, if you want to save images during evaluating for visualization, all you need to do is add args: `dump_images` in the test scripts. Note that, saving images will take more time.
 
+### Notes
+- In my case, I think I don't fully understand the instruction but could reproduce the result with pretrained models [here](https://github.com/JinraeKim/EBLNet#trained-models-and-ckpts).
+See https://github.com/hehao13/EBLNet/issues/13.
+
 ## Training
 To be note that, all our models are trained on 8 V-100 GPUs with 32G memory. **It is hard to reproduce the results if you do not have such
 resources.** For example, when training EBLNet with ResNet50 (os8) as backbone on the Trans10k dataset:
