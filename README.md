@@ -1,5 +1,5 @@
 # EBLNet
-This repo contains the the implementation of Our ICCV-2021 work: Enhanced Boundary Learning for Glass-like Object Segmentation.
+This repo contains the the implementation of Our ICCV-2020 work: Enhanced Boundary Learning for Glass-like Object Segmentation.
 
 This is a join work of Institute of Automation, Chinese Academy of Sciences, Peking University, and Sensetime Research. Much thanks for Sensetime's GPU clusters.
 
@@ -12,6 +12,19 @@ Any Suggestions/Questions/Pull Requests are welcome.
 ![avatar](./fig/teaser_network.png)
 
 The master branch works with PyTorch 1.5 and python 3.7.6
+
+# Development Environment
+Note: I tested this on Ubuntu 18.04, Python 3.7 (based on https://pytorch.org/get-started/previous-versions/#linux-and-windows-20).
+
+1. Install Python dependencies
+```
+pip install -r requirements.txt
+```
+
+2. Install apex following the instruction (Python-only build worked for me):
+https://github.com/NVIDIA/apex#quick-start
+
+3. Create dir `./data` and put dataset in `./data` (see below) according to the instruction.
 
 
 # DataSet preparation
