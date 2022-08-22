@@ -36,7 +36,8 @@ def make_dataset(quality, mode):
 
     c_tokens = os.listdir(image_path)
     c_tokens.sort()
-    mask_tokens = [c_token.replace('.jpg', '_mask.png') for c_token in c_tokens]
+    # mask_tokens = [c_token.replace('.jpg', '_mask.png') for c_token in c_tokens]
+    mask_tokens = [(c_token.replace('.png', '_mask.png')).replace(".jpg", "_mask.png") for c_token in c_tokens]
 
     for img_token, mask_token in zip(c_tokens, mask_tokens):
         token = (osp.join(image_path, img_token), osp.join(mask_path, mask_token))
