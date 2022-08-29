@@ -505,7 +505,7 @@ class RunEval():
         e_x = np.exp(x - np.max(x))
         return e_x / e_x.sum(axis=0)  # only difference
 
-    def inf(self, imgs, img_names, gt, inference, net, scales, base_img):
+    def inf(self, imgs, img_names, gt, inference, net, scales, base_img, img_original=None):
 
         ######################################################################
         # Run inference
@@ -547,13 +547,18 @@ class RunEval():
         # Dump Images
         ######################################################################
         if self.write_image:
+            if img_original is None:
+                h, w = prediction.shape
+            else:
+                assert len(img_original) == 1
+                h, w, _ = np.asarray(img_original[0]).shape
 
             if self.inference_mode == 'pooling':
                 img = pool_base_img
 
             colorized = self.dataset_cls.colorize_mask(prediction)
-            colorized.save(col_img_name)
-            blend = Image.blend(img.convert("RGBA"), colorized.convert("RGBA"), 0.5)
+            colorized.resize((w, h)).save(col_img_name)
+            blend = Image.blend(img.convert("RGBA"), colorized.convert("RGBA"), 0.5).resize((w, h))
             blend.save(compose_img_name)
 
             if gt is not None and args.split != 'test':
@@ -564,7 +569,7 @@ class RunEval():
                 diffimg = Image.fromarray(diff.astype('uint8') * 255)
                 PIL.ImageChops.lighter(
                     blend,
-                    PIL.ImageOps.invert(diffimg).convert("RGBA")
+                    PIL.ImageOps.invert(diffimg).convert("RGBA").resize((w, h))
                 ).save(diff_img_name)
 
             label_out = np.zeros_like(prediction)
@@ -671,7 +676,8 @@ def main():
             base_img = None
             imgs, gt, img_names = data
 
-        runner.inf(imgs, img_names, gt, inference, net, scales, base_img)
+        img_original = [Image.open(token[0]) for token in test_loader.dataset.data_tokens if os.path.basename(token[0]).replace('.png', '').replace('.jpg', '') in img_names]
+        runner.inf(imgs, img_names, gt, inference, net, scales, base_img, img_original)
         if iteration > 5 and args.test_mode:
             break
 

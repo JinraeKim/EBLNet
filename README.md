@@ -1,5 +1,5 @@
 # EBLNet
-This repo contains the the implementation of Our ICCV-2021 work: Enhanced Boundary Learning for Glass-like Object Segmentation.
+This repo contains the the implementation of Our ICCV-2020 work: Enhanced Boundary Learning for Glass-like Object Segmentation.
 
 This is a join work of Institute of Automation, Chinese Academy of Sciences, Peking University, and Sensetime Research. Much thanks for Sensetime's GPU clusters.
 
@@ -12,6 +12,19 @@ Any Suggestions/Questions/Pull Requests are welcome.
 ![avatar](./fig/teaser_network.png)
 
 The master branch works with PyTorch 1.5 and python 3.7.6
+
+# Development Environment
+Note: I tested this on Ubuntu 18.04, Python 3.7 (based on https://pytorch.org/get-started/previous-versions/#linux-and-windows-20).
+
+1. Install Python dependencies
+```
+pip install -r requirements.txt
+```
+
+2. Install apex following the instruction (Python-only build worked for me):
+https://github.com/NVIDIA/apex#quick-start
+
+3. Create dir `./data` and put dataset in `./data` (see below) according to the instruction.
 
 
 # DataSet preparation
@@ -60,6 +73,10 @@ sh scripts/test/test_Trans10k_R50_EBLNet.sh path_to_checkpoint path_to_save_resu
 After running this script, you can get the iou of things and stuff are 92.73 and 87.82, respectively. Thus, the mIoU is 90.28 as reported in the last line of out paper Table. 2. Note that, when computing the mean IoU, we **do not** include the background.
 
 During evaluation, if you want to save images during evaluating for visualization, all you need to do is add args: `dump_images` in the test scripts. Note that, saving images will take more time.
+
+### Notes
+- In my case, I think I don't fully understand the instruction but could reproduce the result with pretrained models [here](https://github.com/JinraeKim/EBLNet#trained-models-and-ckpts).
+See https://github.com/hehao13/EBLNet/issues/13.
 
 ## Training
 To be note that, all our models are trained on 8 V-100 GPUs with 32G memory. **It is hard to reproduce the results if you do not have such

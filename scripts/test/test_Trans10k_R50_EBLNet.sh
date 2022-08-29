@@ -2,6 +2,7 @@
 echo "Running inference on" ${1}
 echo "Saving Results :" ${2}
 python eval.py \
+  --dump_images \
 	--dataset Trans10k \
     --arch network.EBLNet.EBLNet_resnet50_os8 \
     --inference_mode  whole \
